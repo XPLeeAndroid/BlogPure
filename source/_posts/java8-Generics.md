@@ -107,13 +107,56 @@ tags:
 你可以认为泛型类型调用跟原生方法调用大致一样，但是不是传入一个参数到方法，而是传入一个类型蚕食--这个情况下的Integer--给Box类本身。
 > **Type Parameter**和**Type Argument**术语（Terminology）：
 > 很多开发者交换使用这个两个术语，但是这两个术语并不同。敲代码时，
-> type argument 创建一个参数化类型，因此，Foo<T>中的T是type parameter，Foo<String> f中的String是一个type argument。
+> type argument 创建一个参数化类型，因此，Foo< T>中的T是type parameter，Foo< String> f中的String是一个type argument。
 
 就想其他的变量定义，上面的代码不会真正创建一个新的 Box对象。它只是声明，integerBox将持有一个“Box of Integer”的引用，用以读取Box<Integer>.泛型类型的调用通常称为参数化类型。
 
 为了实例化这个类，用new 关键字，把<Integer>放在类名和括号之间。
 
     Box<Integer> integerBox = new Box<Integer>();
+
+### The Diamond ###
+在Java SE 7及以后版本，可以省去类型参数调用泛型类的构造函数，用一个空的类型参数（<>）,编译器可以通过上下文决定，或推测type arguments，这个尖括号非正式得叫作diamond(钻石？这么奇葩)，你可以这样创建Box< Integer>的一个实例：
+
+    Box<Integer> integerBox = new Box<>();
+要查看更多关于diamond 符号和类型推断（inference）,请看[类型推断](https://docs.oracle.com/javase/tutorial/java/generics/genTypeInference.html)。
+
+### 多类型参数 ###
+正如前面提到的，泛型类可以有多个类型参数。比如泛型 OrderedPair 类，实现了泛型接口 Pair：
+
+    public interface Pair<K, V> {
+    public K getKey();
+    public V getValue();
+	}
+
+	public class OrderedPair<K, V> implements Pair<K, V> {
+
+    private K key;
+    private V value;
+
+    public OrderedPair(K key, V value) {
+	this.key = key;
+	this.value = value;
+    }
+
+    public K getKey()	{ return key; }
+    public V getValue() { return value; }
+	}
+下面的语句创建了两个OrderedPair的实例：
+
+
+    Pair<String, Integer> p1 = new OrderedPair<String, Integer>("Even", 8);
+	Pair<String, String>  p2 = new OrderedPair<String, String>("hello", "world");
+
+new OrderedPair<String,Integer>把K实例化为String，V实例化为Integer。因此OrderedPair的参数类型分别(respectively)是String和Integer。因为[自动装箱](https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html)，传入String和int到类是有效的。
+
+### 参数化类型###
+
+你也可以用一个参数化的类型（ie List< String>）替换（substitute）类型参数（K ，V）,例如用OrderedPair< K,V>:
+
+    OrderedPair<String, Box<Integer>> p = new OrderedPair<>("primes", new Box<Integer>(...));
+
+
 
 
     
