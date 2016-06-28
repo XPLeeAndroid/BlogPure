@@ -14,7 +14,7 @@ tags:
 ******
 
 Android Studio开发android程序的一个小特点是数据绑定。我会在将来的文章中讲解它的其他一些优雅的特点，但是你要了解的最基础的是怎样消除findViewById.
-
+<!--more-->
 {% codeblock lang:java %}
 TextView hello = (TextView) findViewById(R.id.hello);
 {% endcodeblock %}
