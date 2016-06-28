@@ -44,3 +44,76 @@ tags:
 
 通过泛型，开发者可以自己实现泛型算法，应用到一系列的不同类型，可以自定义，并且类型安全，易读。
 
+# 泛型类型 #
+
+**泛型类型**是泛型类或者接口被类型参数化。下面的**Box**类将被更改演示这个概念。
+
+### 简单的 Box 类 ###
+
+列举一个简单的非泛型 **Box**操作任意类型的object。它只需要提供两个方法：set，添加一个obejct到box，get,获取这个对象：
+
+    public class Box {
+    private Object object;
+
+    public void set(Object object) { this.object = object; }
+    public Object get() { return object; }
+    }
+因为它的方法接收或返回一个对象，你可以任意传入，只要传入的不是原始数据类型。我们没有在编译时辨别clas如何使用的。一边可能替换一个 Integer到box，另一边获取的不是Integer类型，而可能传入一个String类型，结果会导致运行时错误。
+
+### 泛型版本的Box ###
+
+泛型类的定义形式如下：
+
+    class name<T1, T2, ..., Tn> { /* ... */ }
+
+类型参数部分被一对尖括号（<>）划分，紧跟类名，它指定了**类型参数**（也叫作类型变量）T1， T2， ....,和Tn.
+
+把原Box类更新为泛型类，你要通过把“public class Box”改变为“public class Box<T>”创建一个类型声明。这会引入一个**类型变量**, **T**,你可以在类中任意地方使用。通过这个改变，Box类就变为：
+
+    /**
+ 	* Generic version of the Box class.
+ 	* @param <T> the type of the value being boxed
+ 	*/
+	public class Box<T> {
+    // T stands for "Type"
+    private T t;
+
+    public void set(T t) { this.t = t; }
+    public T get() { return t; }
+	}
+
+你可以看到，所有**Object**出现的地方都被替换为T了。一个类型变量可以指定为任意非原始类型的类型：任意的类，任意的接口，任意的数组，甚至其他的类型变量。同样的技术可以应用到创建泛型接口上。
+
+### 类型参数命名规则（Naming Conventions） ###
+
+通过规则，类型参数是单独的，大写字母。这个表示鲜明区别了你已知的变量命名规则，一个好的理由是：没有这个规则，你将很难区分类型变量和原生类或接口名的区别。
+
+最普遍使用的类型参数是：
+
+- E -Element（Java Collections框架大量使用）
+- K -Key
+- N -Number
+- T -Type
+- V -Value 
+- S,U,V 等 -第二，第三，第四个类型
+
+你可以在JAVA SE API 看到这些名字的使用。
+
+### 调用和实例化一个泛型类型  ###
+要在你的代码引用泛型类 Box，你必须执行 泛型类型调用，把T替换成具体的值，比如Integer： 
+
+    Box<Integer> integerBox;
+
+你可以认为泛型类型调用跟原生方法调用大致一样，但是不是传入一个参数到方法，而是传入一个类型蚕食--这个情况下的Integer--给Box类本身。
+> **Type Parameter**和**Type Argument**术语（Terminology）：
+> 很多开发者交换使用这个两个术语，但是这两个术语并不同。敲代码时，
+> type argument 创建一个参数化类型，因此，Foo<T>中的T是type parameter，Foo<String> f中的String是一个type argument。
+
+就想其他的变量定义，上面的代码不会真正创建一个新的 Box对象。它只是声明，integerBox将持有一个“Box of Integer”的引用，用以读取Box<Integer>.泛型类型的调用通常称为参数化类型。
+
+为了实例化这个类，用new 关键字，把<Integer>放在类名和括号之间。
+
+    Box<Integer> integerBox = new Box<Integer>();
+
+
+    
