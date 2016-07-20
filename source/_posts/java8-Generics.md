@@ -196,5 +196,25 @@ new OrderedPair<String,Integer>把K实例化为String，V实例化为Integer。�
 
 警告显示原类型绕过泛型类型检查，延迟捕获不安全代码到运行时。因此，你需要避免使用原类型。[类型擦除](https://docs.oracle.com/javase/tutorial/java/generics/erasure.html)部分会有更多关于Java编译器如何使用原类型的内容。
 
+## Unchecked Error Messages ##
+
+正如上面提到的，当混合遗赠代码和泛型代码时，你可能会碰到跟下面相似的警告：
+
+    Note: Example.java uses unchecked or unsafe operations.
+    Note: Recompile with -Xlint:unchecked for details.
+
+这发生在当使用老的API操作原类型时，例如如下代码：
+
+    public class WarningDemo {
+	Box<Integer> bi;
+	bi=createBox();
+	}
+	static Box createBox(){
+	return new Box();
+	}
+
+'unchecked'指的是编译器没有足够的类型信息来执行所有必要的类型检查以保证类型安全。
+
+
 
     
