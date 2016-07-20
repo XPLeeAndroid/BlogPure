@@ -1,12 +1,13 @@
 ---
-title: java8教程-泛型（Generics）
+title: anonymous
 date: 2016-7-20 16:12:35
 tags:
  - api
 ---
 
-<!--more-->
+
 # register(host club.qingdaonews.com) #
+<!--more-->
 ***
 - step1  /user/touch_reg.php param: act=regstep1&reg_un=adamin90&reg_pw=wsxqaz123&con_pw=wsxqaz123&tel=15725266012  error response :{"result":"error","type":"tel","info":"\u6b64\u624b\u673a\u53f7\u5df2\u7ecf\u6ce8\u518c(\u9ad8)"} success response :{"result":"success","type":"code","info":"\u53d1\u9001\u6210\u529f"}
 
