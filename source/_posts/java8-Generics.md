@@ -159,6 +159,42 @@ new OrderedPair<String,Integer>把K实例化为String，V实例化为Integer。�
     OrderedPair<String, Box<Integer>> p = new OrderedPair<>("primes", new Box<Integer>(...));
 
 
+# 原类型（Raw Types） #
+
+原类型是指泛型类或泛型接口的名字没有任何参数，比如，给出泛型类Box：
+
+    public class Box(T){
+	public void set(T t){
+	/* ...... */
+	}
+	}
+
+你可以为形参**T**赋值一个真实的类型参数来创建一个参数化类型的 Box（T）：
+
+    Box(Ingeter) intBox=new Box<>();
+
+如果真实的类型参数被省略掉了，你就创建了一个**原类型**的Box<T>:
+
+    Box rawBox =new Box();
+
+因此，Box是Box<T>的原类型。然而，非泛型类或非泛型接口没有原类型。
+原类型出现在遗赠的代码里是因为大量的API类（比如**Collections**类）在JDK5之前不是泛型类。当使用原类型的时候，你本质上使用的是泛型之前的表现---Box ->Object.为了向后兼容，赋值参数化类型给他的原类型是允许的：
+
+    Box<String> stringBox=new Box<>();
+	Box rawBox=stringBox;    //OK
+
+但是如果你赋值一个原类型给一个参数化的类型，你将得到警告：
+
+    Box rawBox=new Box(); //rawBox是Box<T>()的原类型
+    Box<Integer> intBox=rawBox;  //warning:unchecked conversion
+
+当你用原类型调用关联的反省类型的泛型方法时，你也会得到警告：
+
+    Box<String> stringBox=new Box<>();
+    Box rawBox=stringBox;
+    rawBox.set(8);  //waring: unchecked invocation to set(T)
+
+警告显示原类型绕过泛型类型检查，延迟捕获不安全代码到运行时。因此，你需要避免使用原类型。[类型擦除](https://docs.oracle.com/javase/tutorial/java/generics/erasure.html)部分会有更多关于Java编译器如何使用原类型的内容。
 
 
     
