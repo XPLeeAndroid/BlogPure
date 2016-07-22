@@ -22,8 +22,8 @@ menu:
     url: http://www.weibo.com/3132916047
     target: _blank
   link:
-    text: 测试
-    url: /
+    text: 关于我
+    url: http://lixiaopeng.top/
 
 rss: /atom.xml
 
