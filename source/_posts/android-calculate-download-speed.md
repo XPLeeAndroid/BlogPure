@@ -23,4 +23,8 @@ tags:
                     double speed = NANOS_PER_SECOND / BYTES_PER_MIB * totalRead / (System.nanoTime() - start + 1);
 	}
 
+# WARNING #
+
+这种方法计算的是从start开始时间的平均速度，不是实时速度。
+
 
